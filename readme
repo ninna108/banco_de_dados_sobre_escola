@@ -1,0 +1,15 @@
+Este projeto é um banco de dados destinado a armazenar e gerenciar informações relacionadas a uma escola. Ele inclui dados sobre alunos, professores, disciplinas e matrículas, permitindo um controle eficiente e organização das informações escolares.
+
+Funcionalidades
+Armazenamento de dados sobre alunos (nome, matrícula, etc.).
+
+Registro de professores e suas respectivas disciplinas.
+
+Registro de matrículas de alunos em diferentes disciplinas.
+
+Consultas e listagens de alunos, professores e disciplinas no banco de dados.
+
+Tecnologias Utilizadas
+Banco de dados MySQL
+
+este trabalho esta na licença mit
