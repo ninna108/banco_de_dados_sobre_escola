@@ -1,0 +1,74 @@
+-- Passo 1: Criar o banco de dados
+SET SQL_SAFE_UPDATES = 0;
+CREATE DATABASE Escola;
+USE Escola;
+-- Passo 2: Criar a tabela de Alunos
+CREATE TABLE Alunos (
+    AlunoID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100) NOT NULL,
+    DataNascimento DATE,
+    Email VARCHAR(100)
+);
+-- Passo 3: Criar a tabela de Cursos
+CREATE TABLE Cursos (
+    CursoID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(100) NOT NULL,
+    Descricao TEXT
+);
+-- Passo 4: Criar a tabela de Notas
+CREATE TABLE Notas (
+    NotaID INT AUTO_INCREMENT PRIMARY KEY,
+    AlunoID INT,
+    CursoID INT,
+    Nota DECIMAL(5, 2),
+    FOREIGN KEY (AlunoID) REFERENCES Alunos(AlunoID),
+    FOREIGN KEY (CursoID) REFERENCES Cursos(CursoID)
+);
+-- Passo 5: Inserir dados na tabela de Alunos
+INSERT INTO Alunos (Nome, DataNascimento, Email) VALUES
+('Ana Silva', '2000-03-15', 'ana.silva@example.com'),
+('Pedro Costa', '1999-11-20', 'pedro.costa@example.com'),
+('Maria Oliveira', '2001-07-10', 'maria.oliveira@example.com');
+-- Passo 6: Inserir dados na tabela de Cursos
+INSERT INTO Cursos (Nome, Descricao) VALUES
+('Matemática', 'Curso de Matemática Básica e Avançada'),
+('História', 'Curso de História Geral e do Brasil'),
+('Programação', 'Curso de Programação em Python e SQL');
+-- Passo 7: Inserir dados na tabela de Notas
+INSERT INTO Notas (AlunoID, CursoID, Nota) VALUES
+(1, 1, 8.5),
+(1, 2, 9.0),
+(2, 1, 7.0),
+(2, 3, 8.0),
+(3, 2, 8.0),
+(3, 3, 9.5);
+-- Passo 8: Listar todos os alunos com suas notas em cada curso
+SELECT Alunos.Nome AS Aluno, Cursos.Nome AS Curso, Notas.Nota
+FROM Notas
+JOIN Alunos ON Notas.AlunoID = Alunos.AlunoID
+JOIN Cursos ON Notas.CursoID = Cursos.CursoID;
+-- Passo 9: Listar todos os cursos e os alunos matriculados neles
+SELECT Cursos.Nome AS Curso, Alunos.Nome AS Aluno
+FROM Notas
+JOIN Cursos ON Notas.CursoID = Cursos.CursoID
+JOIN Alunos ON Notas.AlunoID = Alunos.AlunoID;
+-- Passo 10: Atualizar a nota de um aluno em um curso específico
+UPDATE Notas
+SET Nota = 9.0
+WHERE AlunoID = 1 AND CursoID = 1;
+-- Passo 11: Remover um aluno e as notas associadas a ele
+-- Primeiro, removemos as notas associadas ao aluno
+DELETE FROM Notas
+WHERE AlunoID = 3;
+
+-- Em seguida, removemos o aluno
+DELETE FROM Alunos
+WHERE AlunoID = 3;
+-- Passo 12: Remover um curso e as notas associadas a ele
+-- Primeiro, removemos as notas associadas ao curso
+DELETE FROM Notas
+WHERE CursoID = 2;
+
+-- Em seguida, removemos o curso
+DELETE FROM Cursos
+WHERE CursoID = 2;
